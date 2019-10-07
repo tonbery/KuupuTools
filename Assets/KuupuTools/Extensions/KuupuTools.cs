@@ -4,19 +4,19 @@ using UnityEngine;
 
 public static class KuupuTools
 {
-    public static void ActivateGameObjects(GameObject[] objects, bool state)
+    public static void SetGameObjectsActivation(GameObject[] objects, bool active)
     {
         for (int i = 0; i < objects.Length; i++)
         {
-            objects[i].SetActive(state);
+            objects[i].SetActive(active);
         }
     }
 
-    public static void ActivateGameObjects(MonoBehaviour[] objects, bool state)
+    public static void SetComponentsActivation(MonoBehaviour[] objects, bool active)
     {
         for (int i = 0; i < objects.Length; i++)
         {
-            objects[i].enabled = state;
+            objects[i].enabled = active;
         }
     }
 
