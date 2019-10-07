@@ -33,16 +33,31 @@ public static class KuupuExtensions
 
         tranform.position = groundPoint;
     }
+    public static void LookAtY(this Transform transform, Vector3 point)
+    {        
+        var lookPos = -point.Direction(transform).Planar();        
+        var rotation = Quaternion.LookRotation(lookPos);
+        transform.rotation = rotation;
+    }
 
     //Distance
     public static float Distance(this Vector3 from, Vector3 to) {
         return (from - to).magnitude;
-    }       
+    }
+
+    public static float PlanarDistance(this Vector3 from, Vector3 to)
+    {
+        return (from.Planar() - to.Planar()).magnitude;
+    }
 
     //Directions
     public static Vector3 Direction(this Vector3 from, Vector3 to)
     {
         return to - from;
+    }
+    public static Vector3 PlanarDirection(this Vector3 from, Vector3 to)
+    {
+        return to.Planar() - from.Planar();
     }
     public static Vector3 Direction(this Transform from, Transform to)
     {
@@ -60,8 +75,23 @@ public static class KuupuExtensions
     }
 
     //Vector operations
-    public static Vector3 ToPlanar(this Vector3 vector)
+    public static Vector3 Planar(this Vector3 vector)
     {
         return new Vector3(vector.x, 0, vector.y);
+    }
+
+
+
+
+    //Lists
+    public static T RandomItem<T>(this IList<T> list)
+    {
+        if (list.Count == 0) throw new System.IndexOutOfRangeException("Cannot select a random item from an empty list");
+        return list[UnityEngine.Random.Range(0, list.Count)];
+    }
+    public static int RandomIndex<T>(this IList<T> list)
+    {
+        if (list.Count == 0) throw new System.IndexOutOfRangeException("Cannot find a random index from an empty list");
+        return UnityEngine.Random.Range(0, list.Count);
     }
 }
