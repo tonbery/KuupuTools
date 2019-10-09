@@ -1,18 +1,19 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEditor;
+using UnityEngine.UIElements;
+using UnityEditor.UIElements;
 
-public class ThirdPersonCameraControllerEditor : MonoBehaviour
+[CustomEditor(typeof(ThirdPersonCameraController))]
+public class ThirdPersonCameraControllerEditor : Editor
 {
-    // Start is called before the first frame update
-    void Start()
+    VisualElement _root;
+    VisualTreeAsset _assetTree;
+    private void OnEnable()
     {
-        
-    }
+        _root = new VisualElement();
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        _assetTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Assets/KuupuTools/KuupuTools/ThirdPersonCamera/Code/EditorScripts/ThirdPersonCameraEditorTemplate.uxml");
+        Debug.Log(_assetTree);
+
     }
 }
