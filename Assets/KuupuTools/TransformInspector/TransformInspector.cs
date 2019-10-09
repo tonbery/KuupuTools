@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(Transform))]
+//[CustomEditor(typeof(Transform))]
 public class TransformInspector : Editor
 {
+    /*
     enum ETransformDrawMode { standard, kuupu}
     ETransformDrawMode _drawMode = ETransformDrawMode.kuupu;
 
@@ -47,4 +48,5 @@ public class TransformInspector : Editor
         Vector3 eulerAngles = EditorGUILayout.Vector3Field("Rotation", transform.localEulerAngles);
         Vector3 scale = EditorGUILayout.Vector3Field("Scale", transform.localScale);
     }
+    */
 }
