@@ -1,18 +1,28 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<UXML
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns="UnityEngine.UIElements"
-    xsi:noNamespaceSchemaLocation="../UIElementsSchema/UIElements.xsd"
-    xsi:schemaLocation="UnityEngine.UIElements ../UIElementsSchema/UnityEngine.UIElements.xsd">
+﻿<UXML xmlns="UnityEngine.UIElements">
+  <VisualElement class ="row">
+    <Label text = "Third Person Camera Controller" class= "header"/>
+  </VisualElement>
 
-  <Label text="Select something to remove from your suitcase:"/>
-  <Box>
-    <Toggle name="boots" label="Boots" value="false" />
-    <Toggle name="helmet" label="Helmet" value="false" />
-    <Toggle name="cloak" label="Cloak of invisibility" value="false"/>
-  </Box>
-  <Box>
-    <Button name="cancel" text="Cancel" />
-    <Button name="ok" text="OK" />
-  </Box>
+  <VisualElement class ="row">
+    <VisualElement name = "_x" class ="property"> </VisualElement>
+    <VisualElement name = "_y" class ="property"> </VisualElement>
+    <VisualElement name = "_trasform" class ="property"> </VisualElement>
+    <VisualElement name = "_pivot" class ="property"> </VisualElement>
+    <VisualElement name = "_cameraTransform" class ="property"> </VisualElement>
+    <VisualElement name = "_camera" class ="property"> </VisualElement>
+    <VisualElement name = "_target" class ="property"> </VisualElement>
+    <VisualElement name = "_currentProfileIndex" class ="property">
+      <Label text = "" class= "header"/>
+      <Label text = "Camera Profile" class= "header"/>
+
+    </VisualElement>
+
+    <VisualElement name = "_profiles" class ="currentProfile"></VisualElement>
+    
+  </VisualElement>
+
+  <VisualElement class ="row">
+    <VisualElement name = "_profiles" class ="profiles"> </VisualElement>    
+  </VisualElement>
+
 </UXML>

@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Camera Profile", menuName = "Kuupu/Third Person Camera/Camera Profile", order = 1)]
-public class CameraProfile : ScriptableObject
+[System.Serializable]
+public class CameraProfile
 {
     [SerializeField] bool _snapToTarget;
-
 
     [SerializeField] float _height = 2;
     [SerializeField] float _distance = 4;
