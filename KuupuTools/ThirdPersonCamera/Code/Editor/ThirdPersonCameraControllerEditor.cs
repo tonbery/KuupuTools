@@ -52,9 +52,19 @@ public class ThirdPersonCameraControllerEditor : Editor
         var currentProfile = profiles.GetArrayElementAtIndex(serializedObject.FindProperty("_currentProfileIndex").intValue);
         var heightProp = currentProfile.FindPropertyRelative("_height");
         var distanceProp = currentProfile.FindPropertyRelative("_distance");
+        var xSpeed = currentProfile.FindPropertyRelative("_xSpeed");
+        var ySpeed = currentProfile.FindPropertyRelative("_ySpeed");
+        var invertY = currentProfile.FindPropertyRelative("_invertY");
+        var minY = currentProfile.FindPropertyRelative("_minY");
+        var maxY = currentProfile.FindPropertyRelative("_maxY");
 
         element.Add(new PropertyField(heightProp));
         element.Add(new PropertyField(distanceProp));
+        element.Add(new PropertyField(xSpeed));
+        element.Add(new PropertyField(ySpeed));
+        element.Add(new PropertyField(invertY));
+        element.Add(new PropertyField(minY));
+        element.Add(new PropertyField(maxY));
 
         return element;
     }

@@ -17,20 +17,39 @@ public class ThirdPersonCameraController : MonoBehaviour
 
     [Header("Runtime properties")]
     [SerializeField] Transform _target;
-
     [SerializeField] int _currentProfileIndex;
-
     [SerializeField] float _x;
     [SerializeField, Range(-90,90)] float _y;
 
+    [Header("Extra Options")]
+    [SerializeField] bool _useSimpleInput;
+    [SerializeField] string _horizontalAxys = "Horizontal";
+    [SerializeField] string _verticalAxys = "Vertical";
+
+
+
+    //INTERNAL
     Vector3 _pivotRotation;
     Vector3 _cameraPosition;
     
+    private void LateUpdate() {
+        UpdatePivotPosition();
+        UpdatePivotRotation(); 
+        UpdateCameraPosition();  
+    }
+    private void Update() {
+        if(_useSimpleInput){                       
+            
+            _x += Input.GetAxis(_horizontalAxys) * Time.deltaTime * CurrentProfile.XSpeed;
+            _y = Mathf.Clamp(_y + Input.GetAxis(_verticalAxys) * Time.deltaTime * CurrentProfile.YSpeed * (CurrentProfile.InvertY ? -1 : 1), CurrentProfile.MinY, CurrentProfile.MaxY);
+            
+        }
+    }
 
     void UpdateCameraPosition()
     {
-        _cameraPosition.y = CurrentProfile.Height;
-        _cameraPosition.z = -CurrentProfile.Distance;
+        _cameraPosition.y = _y < 0 ? CurrentProfile.Height : Mathf.Lerp(CurrentProfile.Height, 0, _y /CurrentProfile.MaxY);
+        _cameraPosition.z =  -(_y < 0 ? CurrentProfile.Distance : CurrentProfile.Distance + Mathf.Lerp(0, CurrentProfile.Height, _y / CurrentProfile.MaxY));
         _cameraTransform.localPosition = _cameraPosition; 
     }
     void UpdatePivotRotation()
@@ -52,7 +71,7 @@ public class ThirdPersonCameraController : MonoBehaviour
 
     private void OnValidate()
     {
-        if (_pivot == null || _camera == null) return;
+        if (_pivot == null || _camera == null || Application.isPlaying) return;
 
         UpdateCameraPosition();
         UpdatePivotRotation();

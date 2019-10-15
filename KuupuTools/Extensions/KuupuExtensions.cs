@@ -77,9 +77,14 @@ public static class KuupuExtensions
     //Vector operations
     public static Vector3 Planar(this Vector3 vector)
     {
-        return new Vector3(vector.x, 0, vector.y);
+        return new Vector3(vector.x, 0, vector.z);
     }
 
+    public static Vector3 NormalizedPlanar(this Vector3 vector)
+    {
+        var planar = vector.Planar();
+        return planar.normalized;
+    }
 
 
 
