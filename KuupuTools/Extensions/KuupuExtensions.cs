@@ -86,6 +86,14 @@ public static class KuupuExtensions
         return planar.normalized;
     }
 
+    //Vector2
+
+    /// <summary>Return a random value between x and y of the vector.</summary>    
+    public static float RandomBetweenXY(this Vector2 vector)
+    {
+        return Random.Range(vector.x, vector.y);
+    }
+
 
 
     //Lists
