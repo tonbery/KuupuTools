@@ -27,11 +27,7 @@ public static class KuupuExtensions
     }
     public static void AlignToGround(this Transform tranform, LayerMask layerMask, float maxDistance)
     {
-        Vector3 groundPoint = tranform.position;
-
-        KuupuTools.Raycast(tranform.position, Vector3.down, maxDistance, layerMask);
-
-        tranform.position = groundPoint;
+        tranform.position = KuupuTools.Raycast(tranform.position, Vector3.down, maxDistance, layerMask).point;
     }
     public static void LookAtY(this Transform transform, Vector3 point)
     {        
@@ -84,6 +80,13 @@ public static class KuupuExtensions
     {
         var planar = vector.Planar();
         return planar.normalized;
+    }
+
+    public static Vector3 AlignToGround(this Vector3 vector, LayerMask layerMask, float maxDistance)
+    {
+        var result = KuupuTools.Raycast(vector + (Vector3.up * (maxDistance)), Vector3.down * (maxDistance * 2), maxDistance, layerMask).point;
+        if (result == Vector3.zero) Debug.Log("To ground didn't find a ground!");
+        return result;
     }
 
     //Vector2
