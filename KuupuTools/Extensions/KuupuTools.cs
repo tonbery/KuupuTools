@@ -103,4 +103,12 @@ public static class KuupuTools
     {
         return Quaternion.AngleAxis(angle, Vector3.up) * vector;
     }
+    public static Quaternion RandomRotationYRange(float min, float max)
+    {
+        return Quaternion.Euler(new Vector3(0, Random.Range(min, max), 0));
+    }
+    public static Quaternion RandomRotationY()
+    {
+        return Quaternion.Euler(new Vector3(0, Random.value * 360, 0));
+    }
 }

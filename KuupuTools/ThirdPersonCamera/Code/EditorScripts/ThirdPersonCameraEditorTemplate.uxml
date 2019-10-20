@@ -11,6 +11,9 @@
     <VisualElement name = "_cameraTransform" class ="property"> </VisualElement>
     <VisualElement name = "_camera" class ="property"> </VisualElement>
     <VisualElement name = "_target" class ="property"> </VisualElement>
+    <VisualElement name = "_useSimpleInput" class ="property"> </VisualElement>
+    <VisualElement name = "_horizontalAxys" class ="property"> </VisualElement>
+    <VisualElement name = "_verticalAxys" class ="property"> </VisualElement>
     <VisualElement name = "_currentProfileIndex" class ="property">
       <Label text = "" class= "header"/>
       <Label text = "Camera Profile" class= "header"/>

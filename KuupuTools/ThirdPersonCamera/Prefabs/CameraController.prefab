@@ -23,7 +23,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 436937582514277962}
-  m_LocalRotation: {x: 0.0050701355, y: 0.9396787, z: -0.013941438, w: 0.34173653}
+  m_LocalRotation: {x: -0.0096339, y: 0.9453861, z: -0.028058406, w: -0.32459986}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -80,11 +80,29 @@ MonoBehaviour:
   _cameraTransform: {fileID: 9149252047927619835}
   _camera: {fileID: 5107732157385315221}
   _profiles:
-  - {fileID: 11400000, guid: efc9672b41368544dbf56382de8cad12, type: 2}
+  - _snapToTarget: 0
+    _height: 1.9
+    _distance: 4.89
+    _xSpeed: 100
+    _ySpeed: 100
+    _invertY: 1
+    _minY: -89
+    _maxY: 89
+  - _snapToTarget: 0
+    _height: 3.92
+    _distance: 6.08
+    _xSpeed: 0
+    _ySpeed: 0
+    _invertY: 0
+    _minY: 0
+    _maxY: 0
   _target: {fileID: 0}
   _currentProfileIndex: 0
-  _x: 140.03
-  _y: 1.7
+  _x: 217.9
+  _y: 3.4
+  _useSimpleInput: 1
+  _horizontalAxys: Horizontal2
+  _verticalAxys: Vertical2
 --- !u!1 &3027891345859402358
 GameObject:
   m_ObjectHideFlags: 0
@@ -110,7 +128,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3027891345859402358}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 2, z: -4.62}
+  m_LocalPosition: {x: 0, y: 1.8274157, z: -4.962584}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 955161430600105354}
