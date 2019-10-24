@@ -48,6 +48,7 @@ public class PoolController:MonoBehaviour
         var obj = _pools[prefabID][0];
         _pools[prefabID].Remove(obj);
         _objectsInUse.Add(obj.GetInstanceID(), prefabID);
+        obj.transform.rotation = Quaternion.identity;
         return obj;
     }
 
