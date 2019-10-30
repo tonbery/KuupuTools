@@ -27,7 +27,8 @@ public static class KuupuExtensions
     }
     public static void AlignToGround(this Transform tranform, LayerMask layerMask, float maxDistance)
     {
-        tranform.position = KuupuTools.Raycast(tranform.position, Vector3.down, maxDistance, layerMask).point;
+        var result = KuupuTools.Raycast(tranform.position, Vector3.down, maxDistance, layerMask);
+        if (result.collider != null) tranform.position = result.point;
     }
     public static void LookAtY(this Transform transform, Vector3 point)
     {        
