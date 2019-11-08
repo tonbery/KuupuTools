@@ -90,7 +90,7 @@ public static class KuupuTools
     public static RaycastHit RayFromMouse(LayerMask mask)
     {
         RaycastHit hit = new RaycastHit();
-        Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 1000, mask);
+        //Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 1000, mask);
         return hit;
     }
     public static float Angle360(Vector3 from, Vector3 to)

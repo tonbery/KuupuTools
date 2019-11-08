@@ -22,9 +22,10 @@ public class ThirdPersonCameraController : MonoBehaviour
     [SerializeField, Range(-90,90)] float _y;
 
     [Header("Extra Options")]
-    [SerializeField] bool _useSimpleInput;
     [SerializeField] string _horizontalAxys = "Horizontal";
     [SerializeField] string _verticalAxys = "Vertical";
+
+    Vector2 _input;
 
 
 
@@ -37,13 +38,14 @@ public class ThirdPersonCameraController : MonoBehaviour
         UpdatePivotRotation(); 
         UpdateCameraPosition();  
     }
-    private void Update() {
-        if(_useSimpleInput){                       
-            
-            _x += Input.GetAxis(_horizontalAxys) * Time.deltaTime * CurrentProfile.XSpeed;
-            _y = Mathf.Clamp(_y + Input.GetAxis(_verticalAxys) * Time.deltaTime * CurrentProfile.YSpeed * (CurrentProfile.InvertY ? -1 : 1), CurrentProfile.MinY, CurrentProfile.MaxY);
-            
-        }
+    private void Update() {        
+        _x += _input.x * Time.deltaTime * CurrentProfile.XSpeed;
+        _y = Mathf.Clamp(_y + _input.y * Time.deltaTime * CurrentProfile.YSpeed * (CurrentProfile.InvertY ? -1 : 1), CurrentProfile.MinY, CurrentProfile.MaxY);
+    }
+
+    public void SetInput(Vector2 input)
+    {
+        _input = input;
     }
 
     void UpdateCameraPosition()
