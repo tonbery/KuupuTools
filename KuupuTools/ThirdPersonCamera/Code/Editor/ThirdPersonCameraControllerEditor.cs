@@ -16,9 +16,6 @@ public class ThirdPersonCameraControllerEditor : Editor
         _style = AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/KuupuTools/KuupuTools/ThirdPersonCamera/Code/EditorScripts/ThirdPersonCameraEditorStyles.uss");
 
         _root.styleSheets.Add(_style);
-
-        Debug.Log(_visualTree);
-
     }
 
     public override VisualElement CreateInspectorGUI()
