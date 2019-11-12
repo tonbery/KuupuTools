@@ -6,8 +6,7 @@ using NaughtyAttributes;
 public class ThirdPersonCameraController : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] Transform _trasform;
-    [SerializeField] Transform _pivot;
+    [SerializeField] Transform _transform;    
     [SerializeField] Transform _cameraTransform;
     [SerializeField] Camera _camera;
 
@@ -21,22 +20,35 @@ public class ThirdPersonCameraController : MonoBehaviour
     [SerializeField] float _x;
     [SerializeField, Range(-90,90)] float _y;
 
-    [Header("Extra Options")]
-    [SerializeField] string _horizontalAxys = "Horizontal";
-    [SerializeField] string _verticalAxys = "Vertical";
+    [Header("Collision options")]
+    [SerializeField] float _collisionRadius = 0.3f;
+    [SerializeField] LayerMask _collisionMask;
 
+
+    Vector3 _cameraDirection;
+    Vector3 _cameraRight;
+    Vector3 _cameraUp = Vector3.up;
     Vector2 _input;
 
+    //COLLISION
+    Ray _collisionRay;
+    RaycastHit _hit;    
+    Vector3 _finalCameraPoint;    
+    Vector3 _bestPosition;
+    Vector3 _targetCenter;
 
+    public Vector3 Forward => _cameraDirection;
+    public Vector3 Right => _cameraRight;
 
-    //INTERNAL
-    Vector3 _pivotRotation;
-    Vector3 _cameraPosition;
-    
+    public Transform Transform => _transform;
+    public Transform CameraTransform => _cameraTransform;
+
     private void LateUpdate() {
         UpdatePivotPosition();
-        UpdatePivotRotation(); 
-        UpdateCameraPosition();  
+        UpdatePivotRotation();
+        MoveCameraTarget();
+        Collision();
+        ApplyCameraPosition();  
     }
     private void Update() {        
         _x += _input.x * Time.deltaTime * CurrentProfile.XSpeed;
@@ -48,37 +60,55 @@ public class ThirdPersonCameraController : MonoBehaviour
         _input = input;
     }
 
-    void UpdateCameraPosition()
+    void Collision()
     {
-        _cameraPosition.y = _y < 0 ? CurrentProfile.Height : Mathf.Lerp(CurrentProfile.Height, 0, _y /CurrentProfile.MaxY);
-        _cameraPosition.z =  -(_y < 0 ? CurrentProfile.Distance : CurrentProfile.Distance + Mathf.Lerp(0, CurrentProfile.Height, _y / CurrentProfile.MaxY));
-        _cameraTransform.localPosition = _cameraPosition; 
+        _collisionRay.origin = _targetCenter;
+        var d = _targetCenter.Direction(_bestPosition);
+        _collisionRay.direction = d;
+                
+        if (Physics.Raycast(_collisionRay, out _hit, d.magnitude, _collisionMask))
+        {
+            _finalCameraPoint = _hit.point + (_cameraDirection * _collisionRadius);
+            #if UNITY_EDITOR
+            Debug.DrawRay(_collisionRay.origin, d, Color.red);
+            #endif
+        }
+        else
+        {
+            _finalCameraPoint = _bestPosition;
+            #if UNITY_EDITOR 
+            Debug.DrawRay(_collisionRay.origin, d, Color.green);
+            #endif
+        }
+    }
+    void MoveCameraTarget()
+    {
+        var d = _y < 0 ? CurrentProfile.Distance : CurrentProfile.Distance + Mathf.Lerp(0, CurrentProfile.Height, _y / CurrentProfile.MaxY);
+        var h = _y < 0 ? CurrentProfile.Height : Mathf.Lerp(CurrentProfile.Height, 0, _y / CurrentProfile.MaxY);        
+       
+        _bestPosition = (_transform.position - (_cameraDirection * d)) + (_cameraUp * h);
+        _targetCenter = _transform.position + Vector3.up;
+    }
+
+    void ApplyCameraPosition()
+    {       
+        _cameraTransform.position = _finalCameraPoint;
     }
     void UpdatePivotRotation()
-    {
-        _pivotRotation.y = _x;
-        _pivotRotation.x = _y;
-        _pivot.eulerAngles = _pivotRotation;
+    {            
+        _cameraDirection = Vector3.forward.RotateAroundY(_x);
+        _cameraRight = -Vector3.Cross(_cameraDirection, Vector3.up);
+        _cameraDirection = _cameraDirection.Rotate(_cameraRight, _y);
+        _cameraTransform.forward = _cameraDirection;
     }
 
     void UpdatePivotPosition()
     {
-        if (_target != null) _trasform.position = _target.position;
+        if (_target != null) _transform.position = _target.position;
     }
 
 
-
-
-#if UNITY_EDITOR
-
-    private void OnValidate()
-    {
-        if (_pivot == null || _camera == null || Application.isPlaying) return;
-
-        UpdateCameraPosition();
-        UpdatePivotRotation();
-        UpdatePivotPosition();
-    }
+#if UNITY_EDITOR   
     [Button] public void SetupCameraObjects()
     {
         foreach (var item in transform.GetComponentsInChildren<Transform>())
@@ -89,16 +119,27 @@ public class ThirdPersonCameraController : MonoBehaviour
             }
         }
 
-        _trasform = transform;
-
-        _pivot = new GameObject("Camera Pivot").transform;
-        _pivot.SetParent(_trasform);
-        _pivot.localPosition = Vector3.zero;
+        _transform = transform;
 
         _camera = new GameObject("Camera", typeof(Camera)).GetComponent<Camera>();
         _cameraTransform = _camera.transform;
-        _cameraTransform.SetParent(_pivot);
         _cameraTransform.localPosition = Vector3.zero;
+    }
+
+    private void OnDrawGizmos()
+    {
+        var RP = transform.position + (Vector3.up * 2);
+        Debug.DrawRay(RP, _cameraDirection, Color.blue);
+        Debug.DrawRay(RP, _cameraRight, Color.green);
+        
+        Gizmos.color = new Color(1, 0, 0, 0.3f);
+        Gizmos.DrawSphere(_finalCameraPoint, _collisionRadius);
+        Gizmos.color = new Color(0, 1, 0, 0.7f);
+        Gizmos.DrawSphere(_bestPosition, 0.3f);
+        Gizmos.color = new Color(0, 0, 1, 0.7f);
+        Gizmos.DrawSphere(_targetCenter, 0.3f);
+        
+        Gizmos.color = Color.white;
     }
 
 #endif

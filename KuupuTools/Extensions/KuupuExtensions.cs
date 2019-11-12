@@ -91,6 +91,15 @@ public static class KuupuExtensions
         return result.point;
     }
 
+    public static Vector3 Rotate(this Vector3 vector, Vector3 axys, float angle)
+    {
+        return Quaternion.AngleAxis(angle, axys) * vector;
+    }
+    public static Vector3 RotateAroundY(this Vector3 vector, float angle)
+    {
+        return vector.Rotate(Vector3.up, angle);
+    }
+
     //Vector2
 
     /// <summary>Return a random value between x and y of the vector.</summary>    

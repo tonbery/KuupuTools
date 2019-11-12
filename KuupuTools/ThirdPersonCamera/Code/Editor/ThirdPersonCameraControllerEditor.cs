@@ -3,7 +3,7 @@ using UnityEditor;
 using UnityEngine.UIElements;
 using UnityEditor.UIElements;
 
-[CustomEditor(typeof(ThirdPersonCameraController))]
+//[CustomEditor(typeof(ThirdPersonCameraController))]
 public class ThirdPersonCameraControllerEditor : Editor
 {
     VisualElement _root;
