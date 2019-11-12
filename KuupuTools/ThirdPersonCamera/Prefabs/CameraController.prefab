@@ -57,15 +57,15 @@ MonoBehaviour:
     _minY: -89
     _maxY: 89
   - _snapToTarget: 0
-    _height: 3.92
-    _distance: 6.08
-    _xSpeed: 0
-    _ySpeed: 0
-    _invertY: 0
-    _minY: 0
-    _maxY: 0
+    _height: 1.51
+    _distance: 2.14
+    _xSpeed: 80
+    _ySpeed: 80
+    _invertY: 1
+    _minY: -89
+    _maxY: 89
   _target: {fileID: 0}
-  _currentProfileIndex: 0
+  _currentProfileIndex: 1
   _x: 217.9
   _y: 3.4
   _collisionRadius: 0.3
