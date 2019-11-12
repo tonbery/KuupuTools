@@ -85,7 +85,8 @@ public static class KuupuExtensions
 
     public static Vector3 AlignToGround(this Vector3 vector, LayerMask layerMask, float maxDistance)
     {
-        var result = KuupuTools.Raycast(vector + (Vector3.up * (maxDistance)), Vector3.down * (maxDistance * 2), maxDistance, layerMask);        
+        var result = KuupuTools.Raycast(vector + (Vector3.up * (maxDistance/2)), Vector3.down * (maxDistance * 2), maxDistance, layerMask);
+       
         if (result.collider == null) Debug.Log("To ground didn't find a ground!");
         return result.point;
     }
