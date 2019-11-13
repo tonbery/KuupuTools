@@ -60,6 +60,11 @@ public class ThirdPersonCameraController : MonoBehaviour
         _input = input;
     }
 
+    public void SetProfile(int index)
+    {
+        _currentProfileIndex = index;
+    }
+
     void Collision()
     {
         _collisionRay.origin = _targetCenter;
