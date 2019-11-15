@@ -31,14 +31,15 @@ public static class KuupuExtensions
         if (result.collider != null) tranform.position = result.point;
     }
     public static void LookAtY(this Transform transform, Vector3 point)
-    {        
-        var lookPos = -point.Direction(transform).Planar();        
+    {
+        var lookPos = -point.Direction(transform).Planar();
         var rotation = Quaternion.LookRotation(lookPos);
         transform.rotation = rotation;
     }
 
     //Distance
-    public static float Distance(this Vector3 from, Vector3 to) {
+    public static float Distance(this Vector3 from, Vector3 to)
+    {
         return (from - to).magnitude;
     }
 
@@ -68,7 +69,7 @@ public static class KuupuExtensions
 
     public static Vector3 Direction(this Vector3 from, Transform to)
     {
-        return to.position - from;        
+        return to.position - from;
     }
 
     //Vector operations
@@ -85,8 +86,8 @@ public static class KuupuExtensions
 
     public static Vector3 AlignToGround(this Vector3 vector, LayerMask layerMask, float maxDistance)
     {
-        var result = KuupuTools.Raycast(vector + (Vector3.up * (maxDistance/2)), Vector3.down * (maxDistance * 2), maxDistance, layerMask);
-       
+        var result = KuupuTools.Raycast(vector + (Vector3.up * (maxDistance / 2)), Vector3.down * (maxDistance * 2), maxDistance, layerMask);
+
         if (result.collider == null) Debug.Log("To ground didn't find a ground!");
         return result.point;
     }
@@ -120,5 +121,21 @@ public static class KuupuExtensions
     {
         if (list.Count == 0) throw new System.IndexOutOfRangeException("Cannot find a random index from an empty list");
         return UnityEngine.Random.Range(0, list.Count);
+    }
+
+
+
+
+    //rigidbody
+    public static void SetVelocity(this Rigidbody rigidbody, Vector3 velocity)
+    {
+        rigidbody.velocity = velocity;
+    }
+    public static void SetHorizontalVelocity(this Rigidbody rigidbody, Vector3 velocity)
+    {
+        var vel = rigidbody.velocity;
+        vel.x = velocity.x;
+        vel.z = velocity.z;
+        rigidbody.velocity = vel;
     }
 }
