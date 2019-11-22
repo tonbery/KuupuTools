@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using NaughtyAttributes;
-
+using DG.Tweening;
 
 public class ThirdPersonCameraController : MonoBehaviour
 {
@@ -11,6 +11,7 @@ public class ThirdPersonCameraController : MonoBehaviour
     [SerializeField] Transform _cameraTransform;
     [SerializeField] Camera _camera;
 
+
     [Header("Profiles")]
     [SerializeField] List<CameraProfile> _profiles = new List<CameraProfile>();
 
@@ -18,6 +19,7 @@ public class ThirdPersonCameraController : MonoBehaviour
 
     [Header("Runtime properties")]
     [SerializeField] Transform _target;
+    [SerializeField] Transform _subTarget;
     [SerializeField] int _currentProfileIndex;
     [SerializeField] float _x;
     [SerializeField, Range(-90,90)] float _y;
@@ -27,6 +29,7 @@ public class ThirdPersonCameraController : MonoBehaviour
     [SerializeField] LayerMask _collisionMask;
 
 
+    Vector3 _positionOffset;
     Vector3 _cameraDirection;
     Vector3 _cameraRight;
     Vector3 _cameraUp = Vector3.up;
@@ -117,7 +120,25 @@ public class ThirdPersonCameraController : MonoBehaviour
 
     void UpdatePivotPosition()
     {
-        if (_target != null) _transform.position = _target.position;
+        if (_target != null)
+        {
+            //if (_subTarget != null) return;
+            
+            _transform.position = _target.position + _positionOffset;
+        }
+    }
+
+    public void SetSubTarget(Transform subTarget)
+    {
+        _subTarget = subTarget;
+        if (subTarget != null)
+        {
+            DOTween.To(() => _positionOffset, x => _positionOffset = x, (subTarget.position - _target.position) / 2, 0.5f);
+        }
+        else
+        {
+            DOTween.To(() => _positionOffset, x => _positionOffset = x, Vector3.zero, 0.5f);
+        }
     }
 
 
