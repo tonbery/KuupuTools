@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using NaughtyAttributes;
 
+
 public class ThirdPersonCameraController : MonoBehaviour
 {
     [Header("References")]
@@ -12,7 +13,8 @@ public class ThirdPersonCameraController : MonoBehaviour
 
     [Header("Profiles")]
     [SerializeField] List<CameraProfile> _profiles = new List<CameraProfile>();
-    CameraProfile CurrentProfile => _profiles[_currentProfileIndex];
+
+    CameraProfile _currentProfile;
 
     [Header("Runtime properties")]
     [SerializeField] Transform _target;
@@ -43,6 +45,11 @@ public class ThirdPersonCameraController : MonoBehaviour
     public Transform Transform => _transform;
     public Transform CameraTransform => _cameraTransform;
 
+    private void Start()
+    {
+        _currentProfile = new CameraProfile(_profiles[_currentProfileIndex]);
+    }
+
     private void LateUpdate() {
         UpdatePivotPosition();
         UpdatePivotRotation();
@@ -51,8 +58,8 @@ public class ThirdPersonCameraController : MonoBehaviour
         ApplyCameraPosition();  
     }
     private void Update() {        
-        _x += _input.x * Time.deltaTime * CurrentProfile.XSpeed;
-        _y = Mathf.Clamp(_y + _input.y * Time.deltaTime * CurrentProfile.YSpeed * (CurrentProfile.InvertY ? -1 : 1), CurrentProfile.MinY, CurrentProfile.MaxY);
+        _x += _input.x * Time.deltaTime * _currentProfile.XSpeed;
+        _y = Mathf.Clamp(_y + _input.y * Time.deltaTime * _currentProfile.YSpeed * (_currentProfile.InvertY ? -1 : 1), _currentProfile.MinY, _currentProfile.MaxY);
     }
 
     public void SetInput(Vector2 input)
@@ -63,6 +70,7 @@ public class ThirdPersonCameraController : MonoBehaviour
     public void SetProfile(int index)
     {
         _currentProfileIndex = index;
+        _currentProfile.ChangeProfile(_profiles[_currentProfileIndex]);
     }
 
     void Collision()
@@ -88,8 +96,8 @@ public class ThirdPersonCameraController : MonoBehaviour
     }
     void MoveCameraTarget()
     {
-        var d = _y < 0 ? CurrentProfile.Distance : CurrentProfile.Distance + Mathf.Lerp(0, CurrentProfile.Height, _y / CurrentProfile.MaxY);
-        var h = _y < 0 ? CurrentProfile.Height : Mathf.Lerp(CurrentProfile.Height, 0, _y / CurrentProfile.MaxY);        
+        var d = _y < 0 ? _currentProfile.Distance : _currentProfile.Distance + Mathf.Lerp(0, _currentProfile.Height, _y / _currentProfile.MaxY);
+        var h = _y < 0 ? _currentProfile.Height : Mathf.Lerp(_currentProfile.Height, 0, _y / _currentProfile.MaxY);        
        
         _bestPosition = (_transform.position - (_cameraDirection * d)) + (_cameraUp * h);
         _targetCenter = _transform.position + Vector3.up;
