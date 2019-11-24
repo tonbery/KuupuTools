@@ -4,6 +4,11 @@ using UnityEngine;
 
 public static class KuupuTools
 {
+
+    
+
+
+
     public static void SetGameObjectsActivation(GameObject[] objects, bool active)
     {
         for (int i = 0; i < objects.Length; i++)
