@@ -21,6 +21,13 @@ public static class KuupuExtensions
         transform.localRotation = Quaternion.identity;
     }
 
+    public static void Apply(this Transform transform, Transform copyFrom)
+    {
+        transform.SetParent(copyFrom.parent);
+        transform.position = copyFrom.position;
+        transform.localScale = copyFrom.localScale;
+        transform.rotation = copyFrom.rotation;
+    }
     public static void ResetScale(this Transform transform)
     {
         transform.localScale = new Vector3(1, 1, 1);
