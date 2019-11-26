@@ -55,6 +55,8 @@ public class PoolController:MonoBehaviour
 
     public void ReturnToPool(GameObject instance)
     {
+        if (instance == null) return;
+
         var instanceID = instance.GetInstanceID();
         if (!_objectsInUse.ContainsKey(instanceID)) {
             Debug.LogError("Trying to return an object that is not from the pool");
