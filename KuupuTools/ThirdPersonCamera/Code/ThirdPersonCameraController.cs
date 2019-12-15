@@ -11,7 +11,6 @@ public class ThirdPersonCameraController : MonoBehaviour
     [SerializeField] Transform _cameraTransform;
     [SerializeField] Camera _camera;
 
-
     [Header("Profiles")]
     [SerializeField] List<CameraProfile> _profiles = new List<CameraProfile>();
 
@@ -28,6 +27,7 @@ public class ThirdPersonCameraController : MonoBehaviour
     [SerializeField] float _collisionRadius = 0.3f;
     [SerializeField] LayerMask _collisionMask;
 
+	public Semaphore CanMoveCamera = new Semaphore();
 
     Vector3 _positionOffset;
     Vector3 _cameraDirection;
@@ -51,9 +51,11 @@ public class ThirdPersonCameraController : MonoBehaviour
     private void Start()
     {
         _currentProfile = new CameraProfile(_profiles[_currentProfileIndex]);
+		//CanMoveCamera.Block("a");
     }
 
     private void LateUpdate() {
+		if (!CanMoveCamera.Free) return;
         UpdatePivotPosition();
         UpdatePivotRotation();
         MoveCameraTarget();
