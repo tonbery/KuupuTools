@@ -29,7 +29,7 @@ public static class KuupuTools
     {
         Ray ray = new Ray(start, direction);
         RaycastHit hit;
-        Debug.DrawRay(ray.origin, ray.direction *maxDistance, Color.yellow, 0.5f);
+		// Debug.DrawRay(ray.origin, ray.direction *maxDistance, Color.yellow, 0.5f);
         Physics.Raycast(ray, out hit, maxDistance, mask);
 
         return hit;
