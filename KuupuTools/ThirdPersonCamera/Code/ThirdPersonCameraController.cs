@@ -62,9 +62,10 @@ public class ThirdPersonCameraController : MonoBehaviour
         Collision();
         ApplyCameraPosition();  
     }
-    private void Update() {        
-        _x += _input.x * Time.deltaTime * _currentProfile.XSpeed;
-        _y = Mathf.Clamp(_y + _input.y * Time.deltaTime * _currentProfile.YSpeed * (_currentProfile.InvertY ? -1 : 1), _currentProfile.MinY, _currentProfile.MaxY);
+    private void Update() {
+		var tS = (Time.timeScale != 1 ? Time.unscaledDeltaTime : Time.deltaTime);
+		_x += _input.x * tS * _currentProfile.XSpeed;
+        _y = Mathf.Clamp(_y + _input.y * tS * _currentProfile.YSpeed * (_currentProfile.InvertY ? -1 : 1), _currentProfile.MinY, _currentProfile.MaxY);
     }
 
     public void SetInput(Vector2 input)
