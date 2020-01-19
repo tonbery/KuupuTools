@@ -76,7 +76,7 @@ public class ObjectVariatorWindow : EditorWindow
             {
                 Undo.RecordObject(item.transform, "Align to ground");
 
-                item.AlignToGround(LayerMasks.GROUND, 100);
+                item.AlignToGround(LayerMasks.GROUND_MASK, 100);
             }
         }
 

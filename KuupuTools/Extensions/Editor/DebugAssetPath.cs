@@ -54,7 +54,7 @@ public class DebugAssetPath
         var obj = Selection.activeGameObject;
         if (obj != null)
         {
-            obj.transform.AlignToGround(LayerMasks.GROUND, 100);
+            obj.transform.AlignToGround(LayerMasks.GROUND_MASK, 100);
         }
     }
 
